@@ -47,6 +47,7 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import com.mcal.qrcode.R;
 import com.mcal.qrcode.data.Date;
 import com.mcal.qrcode.data.Person;
+import com.mcal.qrcode.ui.Dialogs;
 import com.mcal.qrcode.utils.Utils;
 
 import java.util.Calendar;
@@ -116,7 +117,7 @@ public class GenerateActivity extends AppCompatActivity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 saveImage();
             } else {
-                alert("У приложения нет доступа для сохранения изображений");
+                Dialogs.alert(self, "QRCode Generator", "У приложения нет доступа для сохранения изображений");
             }
         }
     }
@@ -137,14 +138,14 @@ public class GenerateActivity extends AppCompatActivity {
 
         String json = gson.toJson(person);
 
-        alert(Utils.strEncrypt(json, 5));
+        Dialogs.alert(self, "QRCode Generator", Utils.strEncrypt(json, 5));
 
         return Utils.strEncrypt(json, 5);
     }
 
     private void saveImage() {
         if (qrImage == null) {
-            alert("Изображения нет");
+            Dialogs.alert(self, "QRCode Generator", "Изображения нет");
             return;
         }
 
@@ -177,21 +178,10 @@ public class GenerateActivity extends AppCompatActivity {
         }
 
         if (!success) {
-            alert("Не удалось сохранить изображение");
+            Dialogs.alert(self, "QRCode Generator", "Не удалось сохранить изображение");
         } else {
             self.snackbar("Изображение сохранено в галерее");
         }
-    }
-
-    private void alert(String message) {
-        AlertDialog dlg = new AlertDialog.Builder(self)
-                .setTitle("QRCode Generator")
-                .setMessage(message)
-                .setPositiveButton("Ок", (dialog, which) -> {
-                    dialog.dismiss();
-                })
-                .create();
-        dlg.show();
     }
 
     private void confirm(String msg, String yesText, final AlertDialog.OnClickListener yesListener) {
@@ -235,7 +225,7 @@ public class GenerateActivity extends AppCompatActivity {
     private void generateImage() {
         final String text = jsonGenerate();
         if (text.trim().isEmpty()) {
-            alert("Сначала введите данные, чтобы создать QR-код.");
+            Dialogs.alert(self, "QRCode Generator", "Сначала введите данные, чтобы создать QR-код.");
             return;
         }
 
@@ -271,7 +261,7 @@ public class GenerateActivity extends AppCompatActivity {
                 });
             } catch (WriterException e) {
                 e.printStackTrace();
-                alert(e.getMessage());
+                Dialogs.alert(self, "QRCode Generator", e.getMessage());
             }
         }).start();
     }

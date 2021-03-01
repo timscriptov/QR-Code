@@ -16,12 +16,25 @@
  */
 package com.mcal.qrcode;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
+import android.content.Context;
 
 public class App extends Application {
+
+    @SuppressLint("StaticFieldLeak")
+    private static Context mContext;
+
+    public static Context getContext() {
+        if (mContext == null) {
+            mContext = new App();
+        }
+        return mContext;
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
+        mContext = getApplicationContext();
     }
 }

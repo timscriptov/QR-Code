@@ -138,9 +138,9 @@ public class GenerateActivity extends AppCompatActivity {
 
         String json = gson.toJson(person);
 
-        Dialogs.alert(self, "QRCode Generator", Utils.strEncrypt(json, 5));
+        Dialogs.alert(self, "QRCode Generator", /*Utils.strEncrypt(*/json/*, 5)*/);
 
-        return Utils.strEncrypt(json, 5);
+        return /*Utils.strEncrypt(*/json/*, 5)*/;
     }
 
     private void saveImage() {

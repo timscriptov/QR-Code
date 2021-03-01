@@ -113,7 +113,7 @@ public class ReadActivity extends AppCompatActivity implements ActivityCompat.On
 
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
-        Person fromJson = gson.fromJson(Utils.strEncrypt(text, 5), Person.class);
+        Person fromJson = gson.fromJson(/*Utils.strEncrypt(*/text/*, 5)*/, Person.class);
 
         txtSurname.setText(fromJson.mSurname);
         txtName.setText(fromJson.mName);

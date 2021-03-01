@@ -34,7 +34,7 @@ public class Utils {
     }
 
 
-    public static @NotNull String strEncrypt(String str, int i) {
+    /*public static @NotNull String strEncrypt(String str, int i) {
         try {
             StringBuilder stringBuilder = new StringBuilder();
             for (int i2 = 0; i2 < str.length(); i2++) {
@@ -44,7 +44,7 @@ public class Utils {
         } catch (Exception e) {
             return "";
         }
-    }
+    }*/
 
     @Contract(value = "_ -> new", pure = true)
     public static char @NotNull [] strSymbols(int i) {

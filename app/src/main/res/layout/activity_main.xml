@@ -6,6 +6,12 @@
     android:gravity="center">
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/registration"
+        android:text="Registration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/qrgenerate"
         android:text="Generate QR-Code"
         android:layout_width="match_parent"

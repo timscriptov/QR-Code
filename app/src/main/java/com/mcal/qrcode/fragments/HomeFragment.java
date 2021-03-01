@@ -28,6 +28,7 @@ import com.mcal.qrcode.activities.GenerateActivity;
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import com.mcal.qrcode.activities.ReadActivity;
+import com.mcal.qrcode.activities.RegistrationActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -35,7 +36,7 @@ public class HomeFragment extends Fragment {
 
     public AppCompatButton mGenerateQRCode;
     public AppCompatButton mReadQRCode;
-
+    public AppCompatButton mRegistration;
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View mView = inflater.inflate(R.layout.activity_main, container, false);
@@ -43,12 +44,16 @@ public class HomeFragment extends Fragment {
         mGenerateQRCode = mView.findViewById(R.id.qrgenerate);
         mReadQRCode = mView.findViewById(R.id.qrread);
 
+        (mView.findViewById(R.id.registration)).setOnClickListener(p1 -> {
+            startActivity(new Intent(getContext(), RegistrationActivity.class));
+        });
+
         (mView.findViewById(R.id.qrgenerate)).setOnClickListener(p1 -> {
-            startActivityForResult(new Intent(getContext(), GenerateActivity.class), 0);
+            startActivity(new Intent(getContext(), GenerateActivity.class));
         });
 
         (mView.findViewById(R.id.qrread)).setOnClickListener(p1 -> {
-            startActivityForResult(new Intent(getContext(), ReadActivity.class), 0);
+            startActivity(new Intent(getContext(), ReadActivity.class));
         });
 
         return mView;

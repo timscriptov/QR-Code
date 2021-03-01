@@ -17,12 +17,10 @@
 package com.mcal.qrcode.activities;
 
 import android.annotation.TargetApi;
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.Settings;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -31,7 +29,6 @@ import com.mcal.qrcode.R;
 import com.mcal.qrcode.adapters.ViewPagerAdapter;
 import com.mcal.qrcode.fragments.HomeFragment;
 import com.mcal.qrcode.ui.Dialogs;
-import com.mcal.qrcode.utils.ExceptionHandler;
 import com.mcal.qrcode.view.CenteredToolBar;
 
 import org.jetbrains.annotations.NotNull;
@@ -56,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
+        //Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
         setContentView(R.layout.main);
 
         setupToolbar(getString(R.string.app_name));

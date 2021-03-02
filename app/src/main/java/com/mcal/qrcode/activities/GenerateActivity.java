@@ -31,24 +31,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.Gson;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.mcal.qrcode.R;
-import com.mcal.qrcode.data.Date;
-import com.mcal.qrcode.data.Person;
+import com.mcal.qrcode.data.Preferences;
 import com.mcal.qrcode.ui.Dialogs;
-import com.mcal.qrcode.utils.Utils;
 
 import java.util.Calendar;
 import java.util.EnumMap;
@@ -62,14 +58,6 @@ public class GenerateActivity extends AppCompatActivity {
     private Snackbar snackbar;
     private Bitmap qrImage;
 
-    private AppCompatEditText txtSurname;
-    private AppCompatEditText txtName;
-    private AppCompatEditText txtPatronymic;
-    private AppCompatEditText txtDay;
-    private AppCompatEditText txtMonth;
-    private AppCompatEditText txtYear;
-    private AppCompatEditText txtPosition;
-
     private AppCompatTextView txtSaveHint;
     private AppCompatButton btnGenerate, btnReset;
     private AppCompatImageView imgResult;
@@ -80,14 +68,6 @@ public class GenerateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_generate);
         self = this;
-
-        txtSurname = findViewById(R.id.surname);
-        txtName = findViewById(R.id.name);
-        txtPatronymic = findViewById(R.id.patronymic);
-        txtDay = findViewById(R.id.day);
-        txtMonth = findViewById(R.id.month);
-        txtYear = findViewById(R.id.year);
-        txtPosition = findViewById(R.id.position);
 
         txtSaveHint = findViewById(R.id.txtSaveHint);
         btnGenerate = findViewById(R.id.btnGenerate);
@@ -122,26 +102,6 @@ public class GenerateActivity extends AppCompatActivity {
         }
     }
 
-    public String jsonGenerate() {
-
-        Gson gson = new Gson();
-
-        Date date = new Date(txtDay.getText().toString(), txtMonth.getText().toString(), txtYear.getText().toString());
-
-        Person person = new Person(
-                Utils.getRandomString(8),
-                txtSurname.getText().toString(),
-                txtName.getText().toString(),
-                txtPatronymic.getText().toString(),
-                date,
-                txtPosition.getText().toString());
-
-        String json = gson.toJson(person);
-
-        Dialogs.alert(self, "QRCode Generator", /*Utils.strEncrypt(*/json/*, 5)*/);
-
-        return /*Utils.strEncrypt(*/json/*, 5)*/;
-    }
 
     private void saveImage() {
         if (qrImage == null) {
@@ -208,28 +168,14 @@ public class GenerateActivity extends AppCompatActivity {
         self.snackbar.show();
     }
 
-    private void endEditing() {
-        txtSurname.clearFocus();
-        txtName.clearFocus();
-        txtPatronymic.clearFocus();
-        txtDay.clearFocus();
-        txtMonth.clearFocus();
-        txtYear.clearFocus();
-        txtPosition.clearFocus();
-        //InputMethodManager imm = (InputMethodManager)getSystemService(Context.
-        //        INPUT_METHOD_SERVICE);
-        //imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-    }
-
 
     private void generateImage() {
-        final String text = jsonGenerate();
+        final String text = Preferences.getId();
         if (text.trim().isEmpty()) {
             Dialogs.alert(self, "QRCode Generator", "Сначала введите данные, чтобы создать QR-код.");
             return;
         }
 
-        endEditing();
         showLoadingVisible(true);
         new Thread(() -> {
             int size = imgResult.getMeasuredWidth();
@@ -277,15 +223,7 @@ public class GenerateActivity extends AppCompatActivity {
     }
 
     private void reset() {
-        txtSurname.setText("");
-        txtName.setText("");
-        txtPatronymic.setText("");
-        txtDay.setText("");
-        txtMonth.setText("");
-        txtYear.setText("");
-        txtPosition.setText("");
         showImage(null);
-        endEditing();
     }
 
     private void showImage(Bitmap bitmap) {

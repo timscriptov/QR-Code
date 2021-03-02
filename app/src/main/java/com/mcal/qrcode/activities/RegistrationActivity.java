@@ -1,29 +1,28 @@
 package com.mcal.qrcode.activities;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.DatePicker;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
 
 import com.mcal.qrcode.R;
+import com.mcal.qrcode.data.Preferences;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -32,10 +31,9 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
     private AppCompatEditText txtSurname; // Фамилия
     private AppCompatEditText txtName; // Имя
     private AppCompatEditText txtPatronymic; // Отчество
-    private AppCompatButton birthDay;
+    private AppCompatEditText txtPassword; // Отчество
+    private AppCompatButton btnBirthDay;
     private AppCompatButton btnRegDone;
-    private String date;
-    private Handler handler = new Handler();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,7 +43,8 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
         txtSurname = findViewById(R.id.surname);
         txtName = findViewById(R.id.name);
         txtPatronymic = findViewById(R.id.patronymic);
-        birthDay = findViewById(R.id.birthDayButton);
+        btnBirthDay = findViewById(R.id.birthDayButton);
+        txtPassword = findViewById(R.id.password);
         btnRegDone = findViewById(R.id.btnRegistration);
     }
 
@@ -54,14 +53,20 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            outputResult(s);
+            if (Preferences.getSuccessful()) {
+                //Preferences.setRegistered(Preferences.getSuccessful());
+                Preferences.setId("");
+            } else {
+                //Preferences.setRegistered(!Preferences.getSuccessful());
+                Preferences.setId(s);
+                outputResult(s);
+            }
         }
 
         @Override
         protected String doInBackground(Void... voids) {
             try {
                 HttpsURLConnection connection = (HttpsURLConnection) new URL("https://timscriptov.ru/registration.php").openConnection();
-                connection.setRequestMethod("POST");
                 connection.setDoOutput(true);
 
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
@@ -69,12 +74,13 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
                 bufferedWriter.close();
 
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
                 String responseLine;
                 while ((responseLine = reader.readLine()) != null) {
                     response.append(responseLine);
                 }
                 reader.close();
+                Preferences.setSuccessful(Boolean.parseBoolean(connection.getHeaderField("Action-Success")));
                 return response.toString();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -95,16 +101,12 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
                 .show();
     }
 
-    private String getEncodedData() {
+    private @NotNull String getEncodedData() {
         String name = txtName.getText().toString();
         String surName = txtSurname.getText().toString();
         String patronymic = txtPatronymic.getText().toString();
-        try {
-            return URLEncoder.encode("name=" + name + "&surName=" + surName + "&patronymic=" + patronymic + "&birthDay=" + birthDay, StandardCharsets.UTF_8.toString());
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            return "";
-        }
+        String password = txtPassword.getText().toString();
+        return "name=" + name + "&surName=" + surName + "&patronymic=" + patronymic + "&birthday=" + Preferences.getDate() + "&password=" + password;
     }
 
     public void chooseDate(View view) {
@@ -115,7 +117,8 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        date = dayOfMonth + "." + month + "." + year;
-        birthDay.setText(date);
+        //Preferences.setDate(dayOfMonth + "." + month + "." + year);
+        Preferences.setDate(year + "." + month + "." + dayOfMonth);
+        btnBirthDay.setText(Preferences.getDate());
     }
 }

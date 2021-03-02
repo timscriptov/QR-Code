@@ -19,11 +19,16 @@ package com.mcal.qrcode;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
+
+import androidx.preference.PreferenceManager;
 
 public class App extends Application {
 
     @SuppressLint("StaticFieldLeak")
     private static Context mContext;
+    @SuppressLint("StaticFieldLeak")
+    private static SharedPreferences mPreferences;
 
     public static Context getContext() {
         if (mContext == null) {
@@ -32,9 +37,17 @@ public class App extends Application {
         return mContext;
     }
 
+    public static SharedPreferences getPreferences() {
+        if (mPreferences == null) {
+            mPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        }
+        return mPreferences;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
         mContext = getApplicationContext();
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
     }
 }

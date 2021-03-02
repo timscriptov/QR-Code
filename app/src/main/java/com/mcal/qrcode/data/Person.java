@@ -21,24 +21,21 @@ import com.google.gson.annotations.SerializedName;
 public class Person {
     @SerializedName("id")
     public String mId;
-    @SerializedName("surname")
+    @SerializedName("surName")
     public String mSurname;
     @SerializedName("name")
     public String mName;
     @SerializedName("patronymic")
     public String mPatronymic;
-    @SerializedName("date")
-    public Date mDate;
-    @SerializedName("position")
-    public String mPosition;
+    @SerializedName("birthDay")
+    public String mDate;
 
-    public Person(String id, String surname, String name, String patronymic, Date date, String position) {
+    public Person(String id, String surname, String name, String patronymic, String date) {
         mId = id;
         mSurname = surname;
         mName = name;
         mPatronymic = patronymic;
         mDate = date;
-        mPosition = position;
     }
 }
 

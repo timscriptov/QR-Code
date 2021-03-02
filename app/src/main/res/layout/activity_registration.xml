@@ -78,12 +78,31 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:hint="Пароль"
+                app:errorEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/password"
+                    android:text="pass1589"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="5dp"
+                    android:inputType="textNoSuggestions"
+                    android:singleLine="true" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/birthDayButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/date"
                 android:onClick="chooseDate"
                 android:text="Choose birthday" />
@@ -91,11 +110,11 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnRegistration"
+                android:background="@drawable/button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/date"
                 android:onClick="sendData"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"

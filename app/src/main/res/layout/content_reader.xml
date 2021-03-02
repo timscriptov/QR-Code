@@ -1,157 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-	<LinearLayout
-		android:orientation="horizontal"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:padding="10dp">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
 
-		<androidx.appcompat.widget.AppCompatTextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:text="Фамилия:"
-			android:textStyle="bold"
-			android:layout_weight="1.0"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Фамилия:"
+            android:textStyle="bold"
+            android:layout_weight="1.0" />
 
-		<androidx.appcompat.widget.AppCompatTextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_weight="1.0"
-			android:id="@+id/surname"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:id="@+id/surname" />
 
-	</LinearLayout>
+    </LinearLayout>
 
-	<LinearLayout
-		android:orientation="horizontal"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:padding="10dp">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
 
-		<androidx.appcompat.widget.AppCompatTextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:text="Имя:"
-			android:textStyle="bold"
-			android:layout_weight="1.0"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Имя:"
+            android:textStyle="bold"
+            android:layout_weight="1.0" />
 
-		<androidx.appcompat.widget.AppCompatTextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_weight="1.0"
-			android:id="@+id/name"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:id="@+id/name" />
 
-	</LinearLayout>
+    </LinearLayout>
 
-	<LinearLayout
-		android:orientation="horizontal"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:padding="10dp">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
 
-		<androidx.appcompat.widget.AppCompatTextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:text="Отчество:"
-			android:textStyle="bold"
-			android:layout_weight="1.0"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Отчество:"
+            android:textStyle="bold"
+            android:layout_weight="1.0" />
 
-		<androidx.appcompat.widget.AppCompatTextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_weight="1.0"
-			android:id="@+id/patronymic"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:id="@+id/patronymic" />
 
-	</LinearLayout>
+    </LinearLayout>
 
-	<LinearLayout
-		android:orientation="horizontal"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:padding="10dp">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
 
-		<androidx.appcompat.widget.AppCompatTextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:text="Дата рождения:"
-			android:textStyle="bold"
-			android:layout_weight="1.0"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Дата рождения:"
+            android:textStyle="bold"
+            android:layout_weight="1.0" />
 
-		<androidx.appcompat.widget.AppCompatTextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_weight="1.0"
-			android:id="@+id/date"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:id="@+id/date" />
 
-	</LinearLayout>
+    </LinearLayout>
 
-	<LinearLayout
-		android:orientation="horizontal"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:padding="10dp">
 
-		<androidx.appcompat.widget.AppCompatTextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:text="Должность:"
-			android:textStyle="bold"
-			android:layout_weight="1.0"/>
+    <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".DecoderActivity">
 
-		<androidx.appcompat.widget.AppCompatTextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_weight="1.0"
-			android:id="@+id/position"/>
+        <com.dlazaro66.qrcodereaderview.QRCodeReaderView
+            android:id="@+id/qrdecoderview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true" />
 
-	</LinearLayout>
+        <com.mcal.qrcode.view.PointsOverlayView
+            android:id="@+id/points_overlay_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-	<RelativeLayout
-		xmlns:tools="http://schemas.android.com/tools"
-		android:id="@+id/main_layout"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		tools:context=".DecoderActivity">
+        <androidx.appcompat.widget.SwitchCompat
+            android:background="#FFF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Фонарик"
+            android:layout_alignParentBottom="true"
+            android:textSize="14sp"
+            android:padding="16dp"
+            android:id="@+id/flashlight_checkbox"
+            android:checked="false" />
 
-		<com.dlazaro66.qrcodereaderview.QRCodeReaderView
-			android:id="@+id/qrdecoderview"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:layout_alignParentLeft="true"
-			android:layout_alignParentTop="true"/>
+        <androidx.appcompat.widget.SwitchCompat
+            android:background="#FFF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="QR расшифровка"
+            android:layout_above="@+id/flashlight_checkbox"
+            android:textSize="14sp"
+            android:padding="16dp"
+            android:id="@+id/enable_decoding_checkbox"
+            android:checked="true" />
 
-		<com.mcal.qrcode.view.PointsOverlayView
-			android:id="@+id/points_overlay_view"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"/>
-
-		<androidx.appcompat.widget.SwitchCompat
-			android:background="#FFF"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:text="Фонарик"
-			android:layout_alignParentBottom="true"
-			android:textSize="14sp"
-			android:padding="16dp"
-			android:id="@+id/flashlight_checkbox"
-			android:checked="false"/>
-
-		<androidx.appcompat.widget.SwitchCompat
-			android:background="#FFF"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:text="QR расшифровка"
-			android:layout_above="@+id/flashlight_checkbox"
-			android:textSize="14sp"
-			android:padding="16dp"
-			android:id="@+id/enable_decoding_checkbox"
-			android:checked="true"/>
-
-	</RelativeLayout>
+    </RelativeLayout>
 
 </LinearLayout>
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorAccent">#448aff</color>
-    <color name="background_cardview">#F3F3F3</color>
-    <color name="color_button">#7BACFF</color>
+    <color name="background_cardview">#FF202125</color>
+    <color name="color_button">#1E1F23</color>
 </resources>

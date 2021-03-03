@@ -24,7 +24,7 @@
             app:cardCornerRadius="6dp">
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:background="#F3F3F3"
+                android:background="@color/background_cardview"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

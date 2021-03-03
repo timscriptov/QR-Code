@@ -21,7 +21,10 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
+
+import com.mcal.qrcode.data.Preferences;
 
 public class App extends Application {
 
@@ -49,5 +52,10 @@ public class App extends Application {
         super.onCreate();
         mContext = getApplicationContext();
         mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (Preferences.getDayNight()) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
     }
 }

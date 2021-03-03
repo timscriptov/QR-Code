@@ -42,7 +42,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:background="@drawable/button"
         android:layout_marginTop="10dp"
-        android:id="@+id/qrread"
+        android:id="@+id/scanner"
         android:text="Сканер"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

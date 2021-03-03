@@ -16,12 +16,27 @@
  */
 package com.mcal.qrcode.utils;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
+import com.mcal.qrcode.App;
+
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
 public class Utils {
+    // Проверка Интернет подключения
+    public static boolean isNetworkAvailable() {
+        ConnectivityManager connection = (ConnectivityManager) App.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = connection.getActiveNetworkInfo();
+        if (info == null) return false;
+        else return info.isConnected();
+    }
+
+    // Генерация рандомной строки
     public static @NotNull String getRandomString(int length) {
         String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         Random random = new Random();
@@ -34,6 +49,7 @@ public class Utils {
     }
 
 
+    // Хор шифрование строки
     public static @NotNull String strEncrypt(String str, int i) {
         try {
             StringBuilder stringBuilder = new StringBuilder();

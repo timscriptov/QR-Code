@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2021 Тимашков Иван
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 package com.mcal.qrcode.activities;
 
 import android.os.AsyncTask;
@@ -14,7 +30,7 @@ import androidx.appcompat.widget.AppCompatEditText;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mcal.qrcode.R;
-import com.mcal.qrcode.data.Person;
+import com.mcal.qrcode.data.Users;
 import com.mcal.qrcode.data.Preferences;
 import com.mcal.qrcode.view.CenteredToolBar;
 
@@ -31,13 +47,11 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class SigninActivity extends AppCompatActivity {
 
-    private CenteredToolBar toolbar;
-
     public AppCompatEditText txtLogin;
     public AppCompatEditText txtPassword;
     public AppCompatButton btnSignin;
-
-    private Person person = null;
+    private CenteredToolBar toolbar;
+    private Users users = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,6 +76,37 @@ public class SigninActivity extends AppCompatActivity {
 
     public void sendData(View view) {
         new AsyncNetworkCall().execute();
+    }
+
+    // Вывод результатов
+    private void outputResult(@NotNull String result) {
+        if (result.startsWith("{")) {
+            GsonBuilder builder = new GsonBuilder();
+            Gson gson = builder.create();
+            users = gson.fromJson(result, Users.class);
+        }
+        if (users != null) {
+            Preferences.setId(users.mId);
+            Preferences.setLogin(users.mLogin);
+            Preferences.setPassword(users.mPassword);
+            result = "Вход выполнен!";
+            setResult(RESULT_OK);
+            finish();
+        } else {
+            setResult(RESULT_CANCELED);
+        }
+        Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NotNull MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private class AsyncNetworkCall extends AsyncTask<Void, Void, String> {
@@ -98,36 +143,5 @@ public class SigninActivity extends AppCompatActivity {
                 return "Error: " + e.getLocalizedMessage();
             }
         }
-    }
-
-    // Вывод результатов
-    private void outputResult(@NotNull String result) {
-        if (result.startsWith("{")) {
-            GsonBuilder builder = new GsonBuilder();
-            Gson gson = builder.create();
-            person = gson.fromJson(result, Person.class);
-        }
-        if (person != null) {
-            Preferences.setId(person.mId);
-            Preferences.setLogin(person.mLogin);
-            Preferences.setPassword(person.mPassword);
-            result = "Вход выполнен!";
-            setResult(RESULT_OK);
-            finish();
-        } else {
-            setResult(RESULT_CANCELED);
-        }
-        Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NotNull MenuItem item) {
-        switch (item.getItemId()) {
-            // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

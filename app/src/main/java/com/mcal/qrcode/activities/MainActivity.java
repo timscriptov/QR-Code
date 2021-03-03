@@ -17,15 +17,19 @@
 package com.mcal.qrcode.activities;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
@@ -33,8 +37,10 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.snackbar.Snackbar;
 import com.mcal.qrcode.R;
 import com.mcal.qrcode.adapters.ViewPagerAdapter;
+import com.mcal.qrcode.data.Preferences;
 import com.mcal.qrcode.fragments.HomeFragment;
 import com.mcal.qrcode.ui.Dialogs;
+import com.mcal.qrcode.utils.ExceptionHandler;
 import com.mcal.qrcode.view.CenteredToolBar;
 
 import org.jetbrains.annotations.NotNull;
@@ -46,35 +52,26 @@ import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
-    private CenteredToolBar toolbar;
-    private ViewPager viewPager;
-
-    private ViewGroup mainLayout;
-
-    private ArrayList<String> permissionsToRequest;
-    private ArrayList<String> permissionsRejected = new ArrayList<>();
-    private ArrayList<String> permissions = new ArrayList<>();
-
     private final static int ALL_PERMISSIONS_RESULT = 107;
     private final static int IMAGE_RESULT = 200;
     private static final int MY_PERMISSION_REQUEST_CAMERA = 0;
     private final int REQUEST_PERMISSION = 0xf0;
+    private CenteredToolBar toolbar;
+    private ViewPager viewPager;
+    private ViewGroup mainLayout;
+    private ArrayList<String> permissionsToRequest;
+    private ArrayList<String> permissionsRejected = new ArrayList<>();
+    private ArrayList<String> permissions = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        //Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
         setContentView(R.layout.main);
 
         setupToolbar(getString(R.string.app_name));
         viewPager = findViewById(R.id.viewpager);
         setupViewPager(viewPager);
-
-        /*if (Build.VERSION.SDK_INT >= 23) {
-            if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Settings.ACTION_MANAGE_OVERLAY_PERMISSION) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE, Settings.ACTION_MANAGE_OVERLAY_PERMISSION}, 1);
-            }
-        }*/
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q && !Environment.isExternalStorageManager()) {
             Dialogs.showScopedStorageDialog(this);
@@ -89,6 +86,29 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             if (permissionsToRequest.size() > 0)
                 requestPermissions(permissionsToRequest.toArray(new String[permissionsToRequest.size()]), ALL_PERMISSIONS_RESULT);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @SuppressLint("WrongConstant")
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.day_night) {
+            if (Preferences.getDayNight()) {
+                Preferences.setDayNight(false);
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                getDelegate().applyDayNight();
+            } else {
+                Preferences.setDayNight(true);
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                getDelegate().applyDayNight();
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private @NotNull ArrayList<String> findUnAskedPermissions(@NotNull ArrayList<String> wanted) {
@@ -159,24 +179,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
 
                 break;
-        }
-    }
-
-    private void requestCameraPermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
-            Snackbar.make(mainLayout, "Camera access is required to display the camera preview.", Snackbar.LENGTH_INDEFINITE).setAction("OK", new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{
-                            Manifest.permission.CAMERA
-                    }, MY_PERMISSION_REQUEST_CAMERA);
-                }
-            }).show();
-        } else {
-            Snackbar.make(mainLayout, "Permission is not available. Requesting camera permission.", Snackbar.LENGTH_SHORT).show();
-            ActivityCompat.requestPermissions(this, new String[]{
-                    Manifest.permission.CAMERA
-            }, MY_PERMISSION_REQUEST_CAMERA);
         }
     }
 

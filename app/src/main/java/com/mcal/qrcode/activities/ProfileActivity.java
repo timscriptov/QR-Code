@@ -1,7 +1,25 @@
+/*
+ * Copyright (C) 2021 Тимашков Иван
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 package com.mcal.qrcode.activities;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -25,7 +43,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.mcal.qrcode.R;
-import com.mcal.qrcode.data.Person;
+import com.mcal.qrcode.data.Users;
 import com.mcal.qrcode.data.Preferences;
 import com.mcal.qrcode.view.CenteredToolBar;
 
@@ -56,8 +74,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     private Bitmap qrImage;
     private AppCompatImageView imgResult;
-    private AppCompatButton btnSave;
-    private Person person = null;
+    private AppCompatButton btnSave, btnShare;
+    private Users users = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,6 +91,10 @@ public class ProfileActivity extends AppCompatActivity {
 
         imgResult = findViewById(R.id.imgResult);
         btnSave = findViewById(R.id.save);
+        btnShare = findViewById(R.id.share);
+        btnShare.setOnClickListener(v -> {
+            shareImage();
+        });
 
         new AsyncNetworkCall().execute();
 
@@ -90,39 +112,6 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
-    private class AsyncNetworkCall extends AsyncTask<Void, Void, String> {
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            outputResult(s);
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-            try {
-                HttpsURLConnection connection = (HttpsURLConnection) new URL("https://timscriptov.ru/qrcode/profile.php").openConnection();
-                connection.setDoOutput(true);
-
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
-                bufferedWriter.write("login=" + Preferences.getLogin() + "&password=" + Preferences.getPassword());
-                bufferedWriter.close();
-
-                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                StringBuilder response = new StringBuilder();
-                String responseLine;
-                while ((responseLine = reader.readLine()) != null) {
-                    response.append(responseLine);
-                }
-                reader.close();
-                return response.toString();
-            } catch (IOException e) {
-                e.printStackTrace();
-                return "Error: " + e.getLocalizedMessage();
-            }
-        }
-    }
-
     // Выход из аккаунта
     public void signOut(View view) {
         Preferences.setId(null);
@@ -137,13 +126,13 @@ public class ProfileActivity extends AppCompatActivity {
         if (result.startsWith("{")) {
             GsonBuilder builder = new GsonBuilder();
             Gson gson = builder.create();
-            person = gson.fromJson(result, Person.class);
+            users = gson.fromJson(result, Users.class);
 
-            txtFirstName.setText(person.mFirstName);
-            txtLastName.setText(person.mLastName);
-            txtPatronymic.setText(person.mPatronymic);
-            txtBirthday.setText(person.mBirthday.replace("-", "."));
-            generateImage(person.mId);
+            txtFirstName.setText(users.mFirstName);
+            txtLastName.setText(users.mLastName);
+            txtPatronymic.setText(users.mPatronymic);
+            txtBirthday.setText(users.mBirthday.replace("-", "."));
+            generateImage(users.mId);
         }
     }
 
@@ -198,18 +187,19 @@ public class ProfileActivity extends AppCompatActivity {
 
     // Сохранение QR-Code изображения
     private void saveImage() {
+        String imgName = "qrcode-" + Calendar.getInstance().getTimeInMillis();
+        boolean success = true;
+
         if (qrImage == null) {
             Toast.makeText(this, "Изображения нет", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        String fname = "qrcode-" + Calendar.getInstance().getTimeInMillis();
-        boolean success = true;
         try {
             String result = MediaStore.Images.Media.insertImage(
                     getContentResolver(),
                     qrImage,
-                    fname,
+                    imgName,
                     "QR-Code Image"
             );
             if (result == null) {
@@ -227,6 +217,41 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
+    // Поделиться QR-Code изображением
+    private void shareImage() {
+        String imgName = "qrcode-" + Calendar.getInstance().getTimeInMillis();
+        boolean success = true;
+
+        if (qrImage == null) {
+            Toast.makeText(this, "Изображения нет", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        try {
+            String result = MediaStore.Images.Media.insertImage(
+                    getContentResolver(),
+                    qrImage,
+                    imgName,
+                    "QR-Code Image"
+            );
+            if (result == null) {
+                success = false;
+            }
+            Uri uriToImage = Uri.parse(result);
+            Intent shareIntent = new Intent();
+            shareIntent.setAction(Intent.ACTION_SEND);
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uriToImage);
+            shareIntent.setType("image/*");
+            startActivity(Intent.createChooser(shareIntent, "Поделиться изображением:"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (!success) {
+            Toast.makeText(this, "Не удалось поделиться изображением!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(@NotNull MenuItem item) {
         switch (item.getItemId()) {
@@ -236,5 +261,38 @@ public class ProfileActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private class AsyncNetworkCall extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            outputResult(s);
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                HttpsURLConnection connection = (HttpsURLConnection) new URL("https://timscriptov.ru/qrcode/profile.php").openConnection();
+                connection.setDoOutput(true);
+
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
+                bufferedWriter.write("login=" + Preferences.getLogin() + "&password=" + Preferences.getPassword());
+                bufferedWriter.close();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String responseLine;
+                while ((responseLine = reader.readLine()) != null) {
+                    response.append(responseLine);
+                }
+                reader.close();
+                return response.toString();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "Error: " + e.getLocalizedMessage();
+            }
+        }
     }
 }

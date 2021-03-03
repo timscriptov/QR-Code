@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2021 Тимашков Иван
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 package com.mcal.qrcode.activities;
 
 import android.app.DatePickerDialog;
@@ -15,7 +31,7 @@ import androidx.appcompat.widget.AppCompatEditText;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mcal.qrcode.R;
-import com.mcal.qrcode.data.Person;
+import com.mcal.qrcode.data.Users;
 import com.mcal.qrcode.data.Preferences;
 import com.mcal.qrcode.view.CenteredToolBar;
 
@@ -43,7 +59,7 @@ public class SignupActivity extends AppCompatActivity implements DatePickerDialo
     private AppCompatButton btnBirthDay;
     private AppCompatButton btnSignup;
     private String date = "";
-    private Person person = null;
+    private Users users = null;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,50 +94,17 @@ public class SignupActivity extends AppCompatActivity implements DatePickerDialo
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
-    private class AsyncNetworkCall extends AsyncTask<Void, Void, String> {
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            outputResult(s);
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-            try {
-                HttpsURLConnection connection = (HttpsURLConnection) new URL("https://timscriptov.ru/qrcode/signup.php").openConnection();
-                connection.setDoOutput(true);
-
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
-                bufferedWriter.write(getEncodedData());
-                bufferedWriter.close();
-
-                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                StringBuilder response = new StringBuilder();
-                String responseLine;
-                while ((responseLine = reader.readLine()) != null) {
-                    response.append(responseLine);
-                }
-                reader.close();
-                return response.toString();
-            } catch (IOException e) {
-                e.printStackTrace();
-                return "Error: " + e.getLocalizedMessage();
-            }
-        }
-    }
-
     // Вывод результатов
     private void outputResult(@NotNull String result) {
         if (result.startsWith("{")) {
             GsonBuilder builder = new GsonBuilder();
             Gson gson = builder.create();
-            person = gson.fromJson(result, Person.class);
+            users = gson.fromJson(result, Users.class);
         }
-        if (person != null) {
-            Preferences.setId(person.mId);
-            Preferences.setLogin(person.mLogin);
-            Preferences.setPassword(person.mPassword);
+        if (users != null) {
+            Preferences.setId(users.mId);
+            Preferences.setLogin(users.mLogin);
+            Preferences.setPassword(users.mPassword);
             result = "Регистрация прошла успешно!";
             setResult(RESULT_OK);
             finish();
@@ -157,5 +140,38 @@ public class SignupActivity extends AppCompatActivity implements DatePickerDialo
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private class AsyncNetworkCall extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            outputResult(s);
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                HttpsURLConnection connection = (HttpsURLConnection) new URL("https://timscriptov.ru/qrcode/signup.php").openConnection();
+                connection.setDoOutput(true);
+
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
+                bufferedWriter.write(getEncodedData());
+                bufferedWriter.close();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String responseLine;
+                while ((responseLine = reader.readLine()) != null) {
+                    response.append(responseLine);
+                }
+                reader.close();
+                return response.toString();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "Error: " + e.getLocalizedMessage();
+            }
+        }
     }
 }

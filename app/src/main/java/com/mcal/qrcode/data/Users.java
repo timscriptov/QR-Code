@@ -18,7 +18,7 @@ package com.mcal.qrcode.data;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Person {
+public class Users {
     @SerializedName("id")
     public String mId;
     @SerializedName("login")
@@ -35,7 +35,7 @@ public class Person {
     public String mBirthday;
 
 
-    public Person(String mId, String mLogin, String mPassword, String mFirstName, String mLastName, String mPatronymic, String mBirthday) {
+    public Users(String mId, String mLogin, String mPassword, String mFirstName, String mLastName, String mPatronymic, String mBirthday) {
         this.mId = mId;
         this.mLogin = mLogin;
         this.mPassword = mPassword;

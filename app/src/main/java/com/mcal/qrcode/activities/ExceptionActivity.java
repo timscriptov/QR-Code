@@ -45,7 +45,7 @@ public class ExceptionActivity extends AppCompatActivity {
 
         toolbar = new CenteredToolBar(this);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("Application Error");
+        toolbar.setTitle("Лог ошибки");
         //toolbar.setBackgroundColor(Color.parseColor(getString(R.color.colorPrimaryDark)));
 
         ScrollView sv = new ScrollView(this);

@@ -32,8 +32,9 @@ import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mcal.qrcode.R;
-import com.mcal.qrcode.data.Person;
+import com.mcal.qrcode.data.Users;
 import com.mcal.qrcode.data.Preferences;
+import com.mcal.qrcode.ui.Dialogs;
 import com.mcal.qrcode.view.CenteredToolBar;
 import com.mcal.qrcode.view.PointsOverlayView;
 
@@ -61,7 +62,7 @@ public class ScannerActivity extends AppCompatActivity implements ActivityCompat
     private SwitchCompat flashlightCheckBox;
     private SwitchCompat enableDecodingCheckBox;
     private PointsOverlayView pointsOverlayView;
-    private Person person = null;
+    private Users users = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +119,45 @@ public class ScannerActivity extends AppCompatActivity implements ActivityCompat
         }
     }
 
+    private void outputResult(@NotNull String result) {
+        if (result.startsWith("{")) {
+            GsonBuilder builder = new GsonBuilder();
+            Gson gson = builder.create();
+            users = gson.fromJson(result, Users.class);
+        }
+        if (users != null) {
+            txtFirstName.setText(users.mFirstName);
+            txtLastName.setText(users.mLastName);
+            txtPatronymic.setText(users.mPatronymic);
+            txtBirthday.setText(users.mBirthday.replace('-', '.'));
+            result = "Пользователь найден!";
+        } else {
+            result = "Пользователь не найден!";
+            Dialogs.alert(this, result, "Пожалуйста свяжитесь с организатором!");
+        }
+        Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void onQRCodeRead(String text, PointF[] points) {
+        Preferences.setId(text);
+        new ScannerActivity.AsyncNetworkCall().execute();
+
+        pointsOverlayView.setPoints(points);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NotNull MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private class AsyncNetworkCall extends AsyncTask<Void, Void, String> {
 
         @Override
@@ -149,41 +189,5 @@ public class ScannerActivity extends AppCompatActivity implements ActivityCompat
                 return "Error: " + e.getLocalizedMessage();
             }
         }
-    }
-
-    private void outputResult(@NotNull String result) {
-        if (result.startsWith("{")) {
-            GsonBuilder builder = new GsonBuilder();
-            Gson gson = builder.create();
-            person = gson.fromJson(result, Person.class);
-        }
-        if (person != null) {
-            txtFirstName.setText(person.mFirstName);
-            txtLastName.setText(person.mLastName);
-            txtPatronymic.setText(person.mPatronymic);
-            txtBirthday.setText(person.mBirthday.replace('-', '.'));
-            result = "Пользователь найден!";
-        } else result = "Пользователь не найден!";
-        Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
-    }
-
-    @SuppressLint("SetTextI18n")
-    @Override
-    public void onQRCodeRead(String text, PointF[] points) {
-        Preferences.setId(text);
-        new ScannerActivity.AsyncNetworkCall().execute();
-
-        pointsOverlayView.setPoints(points);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NotNull MenuItem item) {
-        switch (item.getItemId()) {
-            // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
@@ -32,19 +33,20 @@ import com.mcal.qrcode.activities.ScannerActivity;
 import com.mcal.qrcode.activities.SigninActivity;
 import com.mcal.qrcode.activities.SignupActivity;
 import com.mcal.qrcode.data.Preferences;
+import com.mcal.qrcode.utils.Utils;
 
 import org.jetbrains.annotations.NotNull;
 
 
 public class HomeFragment extends Fragment {
 
-    private AppCompatButton mReadQRCode;
-    private AppCompatButton mLogin;
-    private AppCompatButton mRegistration;
-    private AppCompatButton mProfile;
     final int RC_SIGNUP = 1;
     final int RC_SIGNIN = 1;
     final int RC_SIGNOUT = 1;
+    private AppCompatButton mScanner;
+    private AppCompatButton mLogin;
+    private AppCompatButton mRegistration;
+    private AppCompatButton mProfile;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,20 +57,44 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View mView = inflater.inflate(R.layout.activity_main, container, false);
 
-        mReadQRCode = mView.findViewById(R.id.qrread);
-        mReadQRCode.setOnClickListener(p1 -> startActivity(new Intent(getContext(), ScannerActivity.class)));
+        // Сканер QR-Code
+        mScanner = mView.findViewById(R.id.scanner);
+        mScanner.setOnClickListener(p1 -> {
+            if (Utils.isNetworkAvailable()) {
+                startActivity(new Intent(getContext(), ScannerActivity.class));
+            } else
+                Toast.makeText(getContext(), "Нет Интернет подключения!", Toast.LENGTH_SHORT).show();
+        });
+        mScanner.setVisibility(Preferences.getId() != null ? View.VISIBLE : View.GONE);
 
-
+        // Авторизация
         mLogin = mView.findViewById(R.id.signin);
-        mLogin.setOnClickListener(p1 -> startActivityForResult(new Intent(getContext(), SigninActivity.class), RC_SIGNIN));
+        mLogin.setOnClickListener(p1 -> {
+            if (Utils.isNetworkAvailable()) {
+                startActivityForResult(new Intent(getContext(), SigninActivity.class), RC_SIGNIN);
+            } else
+                Toast.makeText(getContext(), "Нет Интернет подключения!", Toast.LENGTH_SHORT).show();
+        });
         mLogin.setVisibility(Preferences.getId() != null ? View.GONE : View.VISIBLE);
 
+        // Регистрация
         mRegistration = mView.findViewById(R.id.registration);
-        mRegistration.setOnClickListener(p1 -> startActivityForResult(new Intent(getContext(), SignupActivity.class), RC_SIGNUP));
+        mRegistration.setOnClickListener(p1 -> {
+            if (Utils.isNetworkAvailable()) {
+                startActivityForResult(new Intent(getContext(), SignupActivity.class), RC_SIGNUP);
+            } else
+                Toast.makeText(getContext(), "Нет Интернет подключения!", Toast.LENGTH_SHORT).show();
+        });
         mRegistration.setVisibility(Preferences.getId() != null ? View.GONE : View.VISIBLE);
 
+        // Профиль/Аккаунт
         mProfile = mView.findViewById(R.id.profile);
-        mProfile.setOnClickListener(p1 -> startActivityForResult(new Intent(getContext(), ProfileActivity.class), RC_SIGNOUT));
+        mProfile.setOnClickListener(p1 -> {
+            if (Utils.isNetworkAvailable()) {
+                startActivityForResult(new Intent(getContext(), ProfileActivity.class), RC_SIGNOUT);
+            } else
+                Toast.makeText(getContext(), "Нет Интернет подключения!", Toast.LENGTH_SHORT).show();
+        });
         mProfile.setVisibility(Preferences.getId() != null ? View.VISIBLE : View.GONE);
         return mView;
     }
@@ -81,12 +107,14 @@ public class HomeFragment extends Fragment {
             mRegistration.setVisibility(View.GONE);
             mLogin.setVisibility(View.GONE);
             mProfile.setVisibility(View.VISIBLE);
+            mScanner.setVisibility(View.VISIBLE);
         }
 
         if (Preferences.getId() == null) {
             mRegistration.setVisibility(View.VISIBLE);
             mLogin.setVisibility(View.VISIBLE);
             mProfile.setVisibility(View.GONE);
+            mScanner.setVisibility(View.GONE);
         }
     }
 

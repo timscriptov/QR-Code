@@ -26,10 +26,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.mcal.qrcode.R;
 import com.mcal.qrcode.view.CenteredToolBar;
 
 public class ExceptionActivity extends AppCompatActivity {
-
     private CenteredToolBar toolbar;
 
     @SuppressLint("WrongConstant")
@@ -45,8 +45,7 @@ public class ExceptionActivity extends AppCompatActivity {
 
         toolbar = new CenteredToolBar(this);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("Лог ошибки");
-        //toolbar.setBackgroundColor(Color.parseColor(getString(R.color.colorPrimaryDark)));
+        toolbar.setTitle(R.string.app_log);
 
         ScrollView sv = new ScrollView(this);
         TextView error = new TextView(this);

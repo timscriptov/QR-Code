@@ -27,13 +27,14 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 
 import com.mcal.qrcode.BuildConfig;
+import com.mcal.qrcode.R;
 
 public class Dialogs {
     public static void alert(Context context, String title, String message) {
         AlertDialog dlg = new AlertDialog.Builder(context)
                 .setTitle(title)
                 .setMessage(message)
-                .setPositiveButton("Ок", (dialog, which) -> {
+                .setPositiveButton(R.string.ok, (dialog, which) -> {
                     dialog.dismiss();
                 })
                 .create();
@@ -43,8 +44,8 @@ public class Dialogs {
     public static void showMessageOKCancel(Context context, String message, DialogInterface.OnClickListener okListener) {
         new AlertDialog.Builder(context)
                 .setMessage(message)
-                .setPositiveButton("OK", okListener)
-                .setNegativeButton("Cancel", null)
+                .setPositiveButton(R.string.ok, okListener)
+                .setNegativeButton(R.string.cancel, null)
                 .create()
                 .show();
     }
@@ -52,9 +53,9 @@ public class Dialogs {
     @RequiresApi(api = Build.VERSION_CODES.R)
     public static void showScopedStorageDialog(Context context) {
         AlertDialog dlg = new AlertDialog.Builder(context)
-                .setTitle("Изменения в Android 11 R")
-                .setMessage("В Android 11 появился новый способ управления файлами под названием \"Scoped Storage\". Вам необходимо предоставить специальное разрешение!")
-                .setPositiveButton("Ок", (dialog, which) -> {
+                .setTitle(R.string.scoped_storage_title)
+                .setMessage(R.string.scoped_storage_msg)
+                .setPositiveButton(R.string.ok, (dialog, which) -> {
                     Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, Uri.parse("package:" + BuildConfig.APPLICATION_ID));
                     context.startActivity(intent);
                     dialog.dismiss();

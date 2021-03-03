@@ -34,7 +34,6 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.zxing.BarcodeFormat;
@@ -62,10 +61,7 @@ import java.util.Map;
 import javax.net.ssl.HttpsURLConnection;
 
 public class ProfileActivity extends AppCompatActivity {
-
     private CenteredToolBar toolbar;
-
-    private Snackbar snackbar;
 
     private AppCompatTextView txtFirstName;
     private AppCompatTextView txtLastName;
@@ -82,7 +78,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        setupToolbar("Профиль");
+        setupToolbar(getString(R.string.app_profile));
 
         txtFirstName = findViewById(R.id.firstName);
         txtLastName = findViewById(R.id.lastName);
@@ -100,13 +96,13 @@ public class ProfileActivity extends AppCompatActivity {
 
         btnSave.setOnClickListener(v -> {
             new AlertDialog.Builder(this)
-                    .setTitle("Внимание")
-                    .setMessage("Сохранить изображение?")
-                    .setPositiveButton("Да", (dialog, which) -> {
+                    .setTitle(R.string.warninig)
+                    .setMessage(R.string.msg_save_image)
+                    .setPositiveButton(R.string.yes, (dialog, which) -> {
                         saveImage();
                         dialog.dismiss();
                     })
-                    .setNegativeButton("Нет", null)
+                    .setNegativeButton(R.string.no, null)
                     .create()
                     .show();
         });
@@ -191,7 +187,7 @@ public class ProfileActivity extends AppCompatActivity {
         boolean success = true;
 
         if (qrImage == null) {
-            Toast.makeText(this, "Изображения нет", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.image_empty, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -211,9 +207,9 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         if (!success) {
-            Toast.makeText(this, "Не удалось сохранить изображение!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.failed_save_image, Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "Изображение сохранено в галерее!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.successed_save_image, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -223,7 +219,7 @@ public class ProfileActivity extends AppCompatActivity {
         boolean success = true;
 
         if (qrImage == null) {
-            Toast.makeText(this, "Изображения нет", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.image_empty, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -242,13 +238,13 @@ public class ProfileActivity extends AppCompatActivity {
             shareIntent.setAction(Intent.ACTION_SEND);
             shareIntent.putExtra(Intent.EXTRA_STREAM, uriToImage);
             shareIntent.setType("image/*");
-            startActivity(Intent.createChooser(shareIntent, "Поделиться изображением:"));
+            startActivity(Intent.createChooser(shareIntent, getString(R.string.share_image_title)));
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         if (!success) {
-            Toast.makeText(this, "Не удалось поделиться изображением!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.failed_share_image, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -291,7 +287,7 @@ public class ProfileActivity extends AppCompatActivity {
                 return response.toString();
             } catch (IOException e) {
                 e.printStackTrace();
-                return "Error: " + e.getLocalizedMessage();
+                return getString(R.string.error) + e.getLocalizedMessage();
             }
         }
     }

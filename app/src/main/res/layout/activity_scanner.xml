@@ -37,7 +37,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.0"
-                        android:text="Фамилия:"
+                        android:text="@string/profile_first_name"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -58,7 +58,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.0"
-                        android:text="Имя:"
+                        android:text="@string/profile_last_name"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -79,7 +79,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.0"
-                        android:text="Отчество:"
+                        android:text="@string/profile_patronymic"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -100,7 +100,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.0"
-                        android:text="Дата рождения:"
+                        android:text="@string/profile_birthday"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -149,14 +149,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checked="true"
-                    android:text="QR расшифровка" />
+                    android:text="@string/qr_decrypt" />
 
                 <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/flashlight_checkbox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checked="false"
-                    android:text="Фонарик" />
+                    android:text="@string/flashlight" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

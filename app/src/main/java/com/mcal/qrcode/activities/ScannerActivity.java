@@ -50,7 +50,6 @@ import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
 public class ScannerActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback, QRCodeReaderView.OnQRCodeReadListener {
-
     private CenteredToolBar toolbar;
 
     private AppCompatTextView txtFirstName;
@@ -69,7 +68,7 @@ public class ScannerActivity extends AppCompatActivity implements ActivityCompat
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanner);
 
-        setupToolbar("Сканер");
+        setupToolbar(getString(R.string.app_scanner));
 
         qrCodeReaderView = findViewById(R.id.qrdecoderview);
 
@@ -130,10 +129,10 @@ public class ScannerActivity extends AppCompatActivity implements ActivityCompat
             txtLastName.setText(users.mLastName);
             txtPatronymic.setText(users.mPatronymic);
             txtBirthday.setText(users.mBirthday.replace('-', '.'));
-            result = "Пользователь найден!";
+            result = getString(R.string.user_found);
         } else {
-            result = "Пользователь не найден!";
-            Dialogs.alert(this, result, "Пожалуйста свяжитесь с организатором!");
+            result = getString(R.string.user_not_found);
+            Dialogs.alert(this, result, getString(R.string.please_contact_organizer));
         }
         Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
     }
@@ -186,7 +185,7 @@ public class ScannerActivity extends AppCompatActivity implements ActivityCompat
                 return response.toString();
             } catch (IOException e) {
                 e.printStackTrace();
-                return "Error: " + e.getLocalizedMessage();
+                return getString(R.string.error) + e.getLocalizedMessage();
             }
         }
     }

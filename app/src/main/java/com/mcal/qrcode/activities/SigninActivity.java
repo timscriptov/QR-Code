@@ -60,7 +60,7 @@ public class SigninActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
 
-        setupToolbar("Авторизация");
+        setupToolbar(getString(R.string.app_signin));
 
         txtLogin = findViewById(R.id.login);
         txtPassword = findViewById(R.id.password);
@@ -91,7 +91,7 @@ public class SigninActivity extends AppCompatActivity {
             Preferences.setId(users.mId);
             Preferences.setLogin(users.mLogin);
             Preferences.setPassword(users.mPassword);
-            result = "Вход выполнен!";
+            result = getString(R.string.signin_success);
             setResult(RESULT_OK);
             finish();
         } else {
@@ -142,7 +142,7 @@ public class SigninActivity extends AppCompatActivity {
                 return response.toString();
             } catch (IOException e) {
                 e.printStackTrace();
-                return "Error: " + e.getLocalizedMessage();
+                return getString(R.string.error) + e.getLocalizedMessage();
             }
         }
     }

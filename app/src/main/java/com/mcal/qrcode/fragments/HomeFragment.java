@@ -63,7 +63,7 @@ public class HomeFragment extends Fragment {
             if (Utils.isNetworkAvailable()) {
                 startActivity(new Intent(getContext(), ScannerActivity.class));
             } else
-                Toast.makeText(getContext(), "Нет Интернет подключения!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.no_internet_connection, Toast.LENGTH_SHORT).show();
         });
         mScanner.setVisibility(Preferences.getId() != null ? View.VISIBLE : View.GONE);
 
@@ -73,7 +73,7 @@ public class HomeFragment extends Fragment {
             if (Utils.isNetworkAvailable()) {
                 startActivityForResult(new Intent(getContext(), SigninActivity.class), RC_SIGNIN);
             } else
-                Toast.makeText(getContext(), "Нет Интернет подключения!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.no_internet_connection, Toast.LENGTH_SHORT).show();
         });
         mLogin.setVisibility(Preferences.getId() != null ? View.GONE : View.VISIBLE);
 
@@ -83,7 +83,7 @@ public class HomeFragment extends Fragment {
             if (Utils.isNetworkAvailable()) {
                 startActivityForResult(new Intent(getContext(), SignupActivity.class), RC_SIGNUP);
             } else
-                Toast.makeText(getContext(), "Нет Интернет подключения!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.no_internet_connection, Toast.LENGTH_SHORT).show();
         });
         mRegistration.setVisibility(Preferences.getId() != null ? View.GONE : View.VISIBLE);
 
@@ -93,12 +93,11 @@ public class HomeFragment extends Fragment {
             if (Utils.isNetworkAvailable()) {
                 startActivityForResult(new Intent(getContext(), ProfileActivity.class), RC_SIGNOUT);
             } else
-                Toast.makeText(getContext(), "Нет Интернет подключения!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.no_internet_connection, Toast.LENGTH_SHORT).show();
         });
         mProfile.setVisibility(Preferences.getId() != null ? View.VISIBLE : View.GONE);
         return mView;
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

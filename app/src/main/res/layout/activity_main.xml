@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@drawable/button"
-        android:text="Профиль" />
+        android:text="@string/profile" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/signin"
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@drawable/button"
-        android:text="Войти" />
+        android:text="@string/signin" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/registration"
@@ -28,15 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@drawable/button"
-        android:text="Регистрация" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/button"
-        android:text="Генератор"
-        android:visibility="gone" />
+        android:text="@string/signup" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/scanner"
@@ -44,6 +36,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@drawable/button"
-        android:text="Сканер" />
+        android:text="@string/scanner" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -50,20 +50,23 @@ import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
 public class SignupActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
-
-    public TextInputLayout txtLoginHint;
-    public TextInputLayout txtPasswordHint;
     private CenteredToolBar toolbar;
-    private AppCompatEditText txtFirstName; // Фамилия
-    private AppCompatEditText txtLastName; // Имя
-    private AppCompatEditText txtPatronymic; // Отчество
-    private AppCompatEditText txtPassword; // Пароль
-    private AppCompatEditText txtLogin; // Логин
+
+    private AppCompatEditText txtFirstName;
+    private AppCompatEditText txtLastName;
+    private AppCompatEditText txtPatronymic;
+    private AppCompatEditText txtPassword;
+    private AppCompatEditText txtLogin;
+
     private TextInputLayout txtFirstNameHint;
     private TextInputLayout txtLastNameHint;
     private TextInputLayout txtPatronymicHint;
+    private TextInputLayout txtLoginHint;
+    private TextInputLayout txtPasswordHint;
+
     private AppCompatButton btnBirthDay;
     private AppCompatButton btnSignup;
+
     private String date = "";
     private Users users = null;
 
@@ -72,25 +75,25 @@ public class SignupActivity extends AppCompatActivity implements DatePickerDialo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        setupToolbar("Регистрация");
+        setupToolbar(getString(R.string.app_signup));
 
         txtFirstName = findViewById(R.id.firstName);
         txtFirstNameHint = findViewById(R.id.firstNameHint);
-        SpannableStringBuilder firstNameTextHint = TextUtils.setStarToLabel("Фамилия");
+        SpannableStringBuilder firstNameTextHint = TextUtils.setStarToLabel(getString(R.string.first_name));
         txtFirstNameHint.setHint(firstNameTextHint);
 
         txtLastName = findViewById(R.id.lastName);
         txtLastNameHint = findViewById(R.id.lastNameHint);
-        SpannableStringBuilder lastNameTextHint = TextUtils.setStarToLabel("Имя");
+        SpannableStringBuilder lastNameTextHint = TextUtils.setStarToLabel(getString(R.string.last_name));
         txtLastNameHint.setHint(lastNameTextHint);
 
         txtPatronymic = findViewById(R.id.patronymic);
         txtPatronymicHint = findViewById(R.id.patronymicHint);
-        SpannableStringBuilder patronymicTextHint = TextUtils.setStarToLabel("Отчество");
+        SpannableStringBuilder patronymicTextHint = TextUtils.setStarToLabel(getString(R.string.patronymic));
         txtPatronymicHint.setHint(patronymicTextHint);
 
         btnBirthDay = findViewById(R.id.birthday);
-        SpannableStringBuilder birthdaytHint = TextUtils.setStarToLabel("Дата рождения");
+        SpannableStringBuilder birthdaytHint = TextUtils.setStarToLabel(getString(R.string.birthday));
         btnBirthDay.setText(birthdaytHint);
         btnBirthDay.setOnClickListener(p1 -> {
             DatePickerDialog datePickerDialog = new DatePickerDialog(this, this, 2000, 1, 1);
@@ -100,12 +103,12 @@ public class SignupActivity extends AppCompatActivity implements DatePickerDialo
 
         txtLogin = findViewById(R.id.login);
         txtLoginHint = findViewById(R.id.loginHint);
-        SpannableStringBuilder loginTextHint = TextUtils.setStarToLabel("Логин");
+        SpannableStringBuilder loginTextHint = TextUtils.setStarToLabel(getString(R.string.login));
         txtLoginHint.setHint(loginTextHint);
 
         txtPassword = findViewById(R.id.password);
         txtPasswordHint = findViewById(R.id.passwordHint);
-        SpannableStringBuilder passwordTextHint = TextUtils.setStarToLabel("Пароль");
+        SpannableStringBuilder passwordTextHint = TextUtils.setStarToLabel(getString(R.string.password));
         txtPasswordHint.setHint(passwordTextHint);
 
         btnSignup = findViewById(R.id.signup);
@@ -134,7 +137,7 @@ public class SignupActivity extends AppCompatActivity implements DatePickerDialo
             Preferences.setId(users.mId);
             Preferences.setLogin(users.mLogin);
             Preferences.setPassword(users.mPassword);
-            result = "Регистрация прошла успешно!";
+            result = getString(R.string.signup_success);
             setResult(RESULT_OK);
             finish();
         } else {
@@ -199,7 +202,7 @@ public class SignupActivity extends AppCompatActivity implements DatePickerDialo
                 return response.toString();
             } catch (IOException e) {
                 e.printStackTrace();
-                return "Error: " + e.getLocalizedMessage();
+                return getString(R.string.error) + e.getLocalizedMessage();
             }
         }
     }

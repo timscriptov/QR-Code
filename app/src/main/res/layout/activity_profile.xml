@@ -34,7 +34,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="Фамилия:"
+                    android:text="@string/profile_first_name"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -55,7 +55,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="Имя:"
+                    android:text="@string/profile_last_name"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -76,7 +76,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="Отчество:"
+                    android:text="@string/profile_patronymic"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -97,7 +97,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="Дата рождения:"
+                    android:text="@string/profile_birthday"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -117,7 +117,7 @@
                 android:onClick="signOut"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
-                android:text="Выйти из аккаунта" />
+                android:text="@string/signout" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -166,7 +166,7 @@
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/button"
-                    android:text="Сохранить" />
+                    android:text="@string/save_image" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/share"
@@ -176,7 +176,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/button"
-                    android:text="Поделиться" />
+                    android:text="@string/share_image" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

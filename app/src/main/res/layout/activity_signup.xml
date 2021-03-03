@@ -41,6 +41,10 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1.0"
                         android:hint="Фамилия"
+                        android:textColorHint="@color/colorAccent"
+                        android:id="@+id/firstNameHint"
+                        app:prefixTextColor="@color/colorAccent"
+                        app:boxStrokeColor="@color/colorAccent"
                         app:errorEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -59,6 +63,10 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1.0"
                         android:hint="Имя"
+                        android:textColorHint="@color/colorAccent"
+                        android:id="@+id/lastNameHint"
+                        app:prefixTextColor="@color/colorAccent"
+                        app:boxStrokeColor="@color/colorAccent"
                         app:errorEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -77,6 +85,10 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1.0"
                         android:hint="Отчество"
+                        android:textColorHint="@color/colorAccent"
+                        android:id="@+id/patronymicHint"
+                        app:prefixTextColor="@color/colorAccent"
+                        app:boxStrokeColor="@color/colorAccent"
                         app:errorEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -95,7 +107,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/date"
-                        android:text="Дата рождения" />
+                        android:text="Дата рождения"
+                        android:textColor="@color/colorAccent"/>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -123,6 +136,10 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1.0"
                         android:hint="Логин"
+                        android:textColorHint="@color/colorAccent"
+                        android:id="@+id/loginHint"
+                        app:prefixTextColor="@color/colorAccent"
+                        app:boxStrokeColor="@color/colorAccent"
                         app:errorEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -141,6 +158,14 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1.0"
                         android:hint="Пароль"
+                        android:textColorHint="@color/colorAccent"
+                        android:id="@+id/passwordHint"
+                        app:passwordToggleContentDescription=""
+                        app:passwordToggleDrawable="@drawable/password_toggle"
+                        app:passwordToggleEnabled="true"
+                        app:passwordToggleTint="@color/colorAccent"
+                        app:prefixTextColor="@color/colorAccent"
+                        app:boxStrokeColor="@color/colorAccent"
                         app:errorEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText

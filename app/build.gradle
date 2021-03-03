@@ -54,6 +54,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.mobsandgeeks:android-saripaar:1.0.3'
 
     implementation 'com.dlazaro66.qrcodereaderview:qrcodereaderview:2.0.2'
 

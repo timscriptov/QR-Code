@@ -35,6 +35,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Логин"
+                    android:textColorHint="@color/colorAccent"
+                    app:prefixTextColor="@color/colorAccent"
+                    app:boxStrokeColor="@color/colorAccent"
                     app:errorEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -52,6 +55,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Пароль"
+                    android:textColorHint="@color/colorAccent"
+                    app:passwordToggleContentDescription=""
+                    app:passwordToggleDrawable="@drawable/password_toggle"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/colorAccent"
+                    app:prefixTextColor="@color/colorAccent"
+                    app:boxStrokeColor="@color/colorAccent"
                     app:errorEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -59,7 +69,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
                         android:layout_marginTop="5dp"
-                        android:inputType="textNoSuggestions"
+                        android:inputType="textPassword"
                         android:singleLine="true" />
 
                 </com.google.android.material.textfield.TextInputLayout>

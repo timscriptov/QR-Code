@@ -19,6 +19,7 @@ package com.mcal.qrcode.activities;
 import android.app.DatePickerDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.SpannableStringBuilder;
 import android.view.MenuItem;
 import android.widget.DatePicker;
 import android.widget.Toast;
@@ -28,11 +29,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mcal.qrcode.R;
 import com.mcal.qrcode.data.Preferences;
 import com.mcal.qrcode.data.Users;
+import com.mcal.qrcode.utils.TextUtils;
 import com.mcal.qrcode.view.CenteredToolBar;
 
 import org.jetbrains.annotations.NotNull;
@@ -48,14 +51,17 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class SignupActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
+    public TextInputLayout txtLoginHint;
+    public TextInputLayout txtPasswordHint;
     private CenteredToolBar toolbar;
-
     private AppCompatEditText txtFirstName; // Фамилия
     private AppCompatEditText txtLastName; // Имя
     private AppCompatEditText txtPatronymic; // Отчество
     private AppCompatEditText txtPassword; // Пароль
     private AppCompatEditText txtLogin; // Логин
-
+    private TextInputLayout txtFirstNameHint;
+    private TextInputLayout txtLastNameHint;
+    private TextInputLayout txtPatronymicHint;
     private AppCompatButton btnBirthDay;
     private AppCompatButton btnSignup;
     private String date = "";
@@ -69,19 +75,42 @@ public class SignupActivity extends AppCompatActivity implements DatePickerDialo
         setupToolbar("Регистрация");
 
         txtFirstName = findViewById(R.id.firstName);
+        txtFirstNameHint = findViewById(R.id.firstNameHint);
+        SpannableStringBuilder firstNameTextHint = TextUtils.setStarToLabel("Фамилия");
+        txtFirstNameHint.setHint(firstNameTextHint);
+
         txtLastName = findViewById(R.id.lastName);
+        txtLastNameHint = findViewById(R.id.lastNameHint);
+        SpannableStringBuilder lastNameTextHint = TextUtils.setStarToLabel("Имя");
+        txtLastNameHint.setHint(lastNameTextHint);
+
         txtPatronymic = findViewById(R.id.patronymic);
+        txtPatronymicHint = findViewById(R.id.patronymicHint);
+        SpannableStringBuilder patronymicTextHint = TextUtils.setStarToLabel("Отчество");
+        txtPatronymicHint.setHint(patronymicTextHint);
+
         btnBirthDay = findViewById(R.id.birthday);
-        txtPassword = findViewById(R.id.password);
-        txtLogin = findViewById(R.id.login);
-        btnSignup = findViewById(R.id.signup);
-        btnSignup.setOnClickListener(p1 -> {
-            new AsyncNetworkCall().execute();
-        });
+        SpannableStringBuilder birthdaytHint = TextUtils.setStarToLabel("Дата рождения");
+        btnBirthDay.setText(birthdaytHint);
         btnBirthDay.setOnClickListener(p1 -> {
             DatePickerDialog datePickerDialog = new DatePickerDialog(this, this, 2000, 1, 1);
             datePickerDialog.setCancelable(false);
             datePickerDialog.show();
+        });
+
+        txtLogin = findViewById(R.id.login);
+        txtLoginHint = findViewById(R.id.loginHint);
+        SpannableStringBuilder loginTextHint = TextUtils.setStarToLabel("Логин");
+        txtLoginHint.setHint(loginTextHint);
+
+        txtPassword = findViewById(R.id.password);
+        txtPasswordHint = findViewById(R.id.passwordHint);
+        SpannableStringBuilder passwordTextHint = TextUtils.setStarToLabel("Пароль");
+        txtPasswordHint.setHint(passwordTextHint);
+
+        btnSignup = findViewById(R.id.signup);
+        btnSignup.setOnClickListener(p1 -> {
+            new AsyncNetworkCall().execute();
         });
     }
 

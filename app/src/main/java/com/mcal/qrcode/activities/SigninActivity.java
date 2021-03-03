@@ -50,8 +50,10 @@ public class SigninActivity extends AppCompatActivity {
     public AppCompatEditText txtLogin;
     public AppCompatEditText txtPassword;
     public AppCompatButton btnSignin;
+
     private CenteredToolBar toolbar;
     private Users users = null;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

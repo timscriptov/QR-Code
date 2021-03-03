@@ -14,12 +14,32 @@ android {
         versionName "1.0"
     }
 
+    signingConfigs {
+        releaseConfig {
+            storeFile file('../keystore.jks')
+            keyAlias 'keystore'
+            keyPassword 'project2021'
+            storePassword 'project2021'
+
+            v2SigningEnabled true
+        }
+    }
+
     buildTypes {
         release {
+            shrinkResources false
             minifyEnabled true
+            signingConfig signingConfigs.releaseConfig
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            shrinkResources false
+            minifyEnabled false
+            signingConfig signingConfigs.releaseConfig
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

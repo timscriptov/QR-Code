@@ -10,12 +10,10 @@
     <include layout="@layout/toolbar_shadow" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/mainBody"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/inputs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusable="true"

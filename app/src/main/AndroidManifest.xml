@@ -46,11 +46,15 @@
         </activity>
 
         <activity
-            android:name=".activities.LoginActivity"
+            android:name=".activities.ProfileActivity"
             android:label="@string/app_name" />
 
         <activity
-            android:name=".activities.RegistrationActivity"
+            android:name=".activities.SigninActivity"
+            android:label="@string/app_name" />
+
+        <activity
+            android:name=".activities.SignupActivity"
             android:label="@string/app_name" />
 
         <activity
@@ -58,11 +62,7 @@
             android:label="@string/app_name" />
 
         <activity
-            android:name=".activities.GenerateActivity"
-            android:label="@string/app_name" />
-
-        <activity
-            android:name=".activities.ReadActivity"
+            android:name=".activities.ScannerActivity"
             android:label="@string/app_name" />
 
         <provider

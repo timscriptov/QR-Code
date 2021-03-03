@@ -8,7 +8,16 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:background="@drawable/button"
-        android:id="@+id/login"
+        android:id="@+id/profile"
+        android:layout_marginTop="10dp"
+        android:text="Профиль"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:background="@drawable/button"
+        android:layout_marginTop="10dp"
+        android:id="@+id/signin"
         android:text="Войти"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -25,7 +34,8 @@
         android:background="@drawable/button"
         android:layout_marginTop="10dp"
         android:id="@+id/qrgenerate"
-        android:text="Generate QR-Code"
+        android:text="Генератор"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -33,7 +43,7 @@
         android:background="@drawable/button"
         android:layout_marginTop="10dp"
         android:id="@+id/qrread"
-        android:text="Read QR-Code"
+        android:text="Сканер"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

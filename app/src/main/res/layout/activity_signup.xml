@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <include layout="@layout/toolbar_shadow" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/mainBody"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/inputs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                app:cardCornerRadius="6dp">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:background="@color/background_cardview"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:hint="Фамилия"
+                        app:errorEnabled="false">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/firstName"
+                            android:layout_width="match_parent"
+                            android:layout_height="56dp"
+                            android:layout_marginTop="5dp"
+                            android:inputType="textNoSuggestions"
+                            android:singleLine="true" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:hint="Имя"
+                        app:errorEnabled="false">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/lastName"
+                            android:layout_width="match_parent"
+                            android:layout_height="56dp"
+                            android:layout_marginTop="5dp"
+                            android:inputType="textNoSuggestions"
+                            android:singleLine="true" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:hint="Отчество"
+                        app:errorEnabled="false">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/patronymic"
+                            android:layout_width="match_parent"
+                            android:layout_height="56dp"
+                            android:layout_marginTop="5dp"
+                            android:inputType="textNoSuggestions"
+                            android:singleLine="true" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/birthday"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/date"
+                        android:text="Дата рождения" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                app:cardCornerRadius="6dp">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:background="@color/background_cardview"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp">
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:hint="Логин"
+                        app:errorEnabled="false">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/login"
+                            android:layout_width="match_parent"
+                            android:layout_height="56dp"
+                            android:layout_marginTop="5dp"
+                            android:inputType="textNoSuggestions"
+                            android:singleLine="true" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:hint="Пароль"
+                        app:errorEnabled="false">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/password"
+                            android:layout_width="match_parent"
+                            android:layout_height="56dp"
+                            android:layout_marginTop="5dp"
+                            android:inputType="textPassword"
+                            android:singleLine="true" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/signup"
+                android:background="@drawable/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Регистрация" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

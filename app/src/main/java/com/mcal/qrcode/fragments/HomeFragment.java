@@ -27,9 +27,10 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
 import com.mcal.qrcode.R;
-import com.mcal.qrcode.activities.GenerateActivity;
-import com.mcal.qrcode.activities.ReadActivity;
-import com.mcal.qrcode.activities.RegistrationActivity;
+import com.mcal.qrcode.activities.ProfileActivity;
+import com.mcal.qrcode.activities.ScannerActivity;
+import com.mcal.qrcode.activities.SigninActivity;
+import com.mcal.qrcode.activities.SignupActivity;
 import com.mcal.qrcode.data.Preferences;
 
 import org.jetbrains.annotations.NotNull;
@@ -37,10 +38,13 @@ import org.jetbrains.annotations.NotNull;
 
 public class HomeFragment extends Fragment {
 
-    private AppCompatButton mGenerateQRCode;
     private AppCompatButton mReadQRCode;
     private AppCompatButton mLogin;
     private AppCompatButton mRegistration;
+    private AppCompatButton mProfile;
+    final int RC_SIGNUP = 1;
+    final int RC_SIGNIN = 1;
+    final int RC_SIGNOUT = 1;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,20 +55,39 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View mView = inflater.inflate(R.layout.activity_main, container, false);
 
-        mGenerateQRCode = mView.findViewById(R.id.qrgenerate);
         mReadQRCode = mView.findViewById(R.id.qrread);
-        mLogin = mView.findViewById(R.id.login);
+        mReadQRCode.setOnClickListener(p1 -> startActivity(new Intent(getContext(), ScannerActivity.class)));
+
+
+        mLogin = mView.findViewById(R.id.signin);
+        mLogin.setOnClickListener(p1 -> startActivityForResult(new Intent(getContext(), SigninActivity.class), RC_SIGNIN));
+        mLogin.setVisibility(Preferences.getId() != null ? View.GONE : View.VISIBLE);
+
         mRegistration = mView.findViewById(R.id.registration);
+        mRegistration.setOnClickListener(p1 -> startActivityForResult(new Intent(getContext(), SignupActivity.class), RC_SIGNUP));
+        mRegistration.setVisibility(Preferences.getId() != null ? View.GONE : View.VISIBLE);
 
-        mLogin.setOnClickListener(p1 -> startActivity(new Intent(getContext(), RegistrationActivity.class)));
-        mLogin.setVisibility(Preferences.getRegistered() ? View.GONE : View.VISIBLE);
-
-        mRegistration.setOnClickListener(p1 -> startActivity(new Intent(getContext(), RegistrationActivity.class)));
-        mRegistration.setVisibility(Preferences.getRegistered() ? View.GONE : View.VISIBLE);
-
-        mGenerateQRCode.setOnClickListener(p1 -> startActivity(new Intent(getContext(), GenerateActivity.class)));
-        mReadQRCode.setOnClickListener(p1 -> startActivity(new Intent(getContext(), ReadActivity.class)));
-
+        mProfile = mView.findViewById(R.id.profile);
+        mProfile.setOnClickListener(p1 -> startActivityForResult(new Intent(getContext(), ProfileActivity.class), RC_SIGNOUT));
+        mProfile.setVisibility(Preferences.getId() != null ? View.VISIBLE : View.GONE);
         return mView;
     }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (Preferences.getId() != null) {
+            mRegistration.setVisibility(View.GONE);
+            mLogin.setVisibility(View.GONE);
+            mProfile.setVisibility(View.VISIBLE);
+        }
+
+        if (Preferences.getId() == null) {
+            mRegistration.setVisibility(View.VISIBLE);
+            mLogin.setVisibility(View.VISIBLE);
+            mProfile.setVisibility(View.GONE);
+        }
+    }
+
 }

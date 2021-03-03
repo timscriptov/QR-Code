@@ -16,15 +16,21 @@
  */
 package com.mcal.qrcode.activities;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.mcal.qrcode.R;
 import com.mcal.qrcode.adapters.ViewPagerAdapter;
 import com.mcal.qrcode.fragments.HomeFragment;
@@ -39,9 +45,11 @@ import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
     private CenteredToolBar toolbar;
     private ViewPager viewPager;
+
+    private ViewGroup mainLayout;
 
     private ArrayList<String> permissionsToRequest;
     private ArrayList<String> permissionsRejected = new ArrayList<>();
@@ -49,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
 
     private final static int ALL_PERMISSIONS_RESULT = 107;
     private final static int IMAGE_RESULT = 200;
+    private static final int MY_PERMISSION_REQUEST_CAMERA = 0;
+    private final int REQUEST_PERMISSION = 0xf0;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -129,9 +139,47 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }
+                if (requestCode != MY_PERMISSION_REQUEST_CAMERA) {
+                    return;
+                }
+
+                if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Snackbar.make(mainLayout, "Camera permission was granted.", Snackbar.LENGTH_SHORT).show();
+                } else {
+                    Snackbar.make(mainLayout, "Camera permission request was denied.", Snackbar.LENGTH_SHORT).show();
+                }
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                        && ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                            REQUEST_PERMISSION);
+                    return;
+                }
+
+
                 break;
         }
     }
+
+    private void requestCameraPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+            Snackbar.make(mainLayout, "Camera access is required to display the camera preview.", Snackbar.LENGTH_INDEFINITE).setAction("OK", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{
+                            Manifest.permission.CAMERA
+                    }, MY_PERMISSION_REQUEST_CAMERA);
+                }
+            }).show();
+        } else {
+            Snackbar.make(mainLayout, "Permission is not available. Requesting camera permission.", Snackbar.LENGTH_SHORT).show();
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.CAMERA
+            }, MY_PERMISSION_REQUEST_CAMERA);
+        }
+    }
+
 
     @SuppressWarnings("ConstantConditions")
     private void setupToolbar(String title) {

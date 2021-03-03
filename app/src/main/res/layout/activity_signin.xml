@@ -10,24 +10,24 @@
     <include layout="@layout/toolbar_shadow" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:orientation="vertical"
-        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             app:cardCornerRadius="6dp">
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:background="@color/background_cardview"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/background_cardview"
+                android:orientation="vertical"
                 android:padding="10dp">
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -66,10 +66,10 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/signin"
-                    android:background="@drawable/button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:background="@drawable/button"
                     android:onClick="sendData"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"

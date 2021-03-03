@@ -31,8 +31,8 @@ import androidx.appcompat.widget.AppCompatEditText;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mcal.qrcode.R;
-import com.mcal.qrcode.data.Users;
 import com.mcal.qrcode.data.Preferences;
+import com.mcal.qrcode.data.Users;
 import com.mcal.qrcode.view.CenteredToolBar;
 
 import org.jetbrains.annotations.NotNull;

@@ -43,8 +43,8 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.mcal.qrcode.R;
-import com.mcal.qrcode.data.Users;
 import com.mcal.qrcode.data.Preferences;
+import com.mcal.qrcode.data.Users;
 import com.mcal.qrcode.view.CenteredToolBar;
 
 import org.jetbrains.annotations.NotNull;

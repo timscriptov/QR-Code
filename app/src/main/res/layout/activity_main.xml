@@ -2,48 +2,48 @@
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:gravity="center"
+    android:orientation="vertical"
     android:padding="10dp">
 
     <androidx.appcompat.widget.AppCompatButton
-        android:background="@drawable/button"
         android:id="@+id/profile"
-        android:layout_marginTop="10dp"
-        android:text="Профиль"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button"
+        android:text="Профиль" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:background="@drawable/button"
-        android:layout_marginTop="10dp"
         android:id="@+id/signin"
-        android:text="Войти"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button"
+        android:text="Войти" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:background="@drawable/button"
-        android:layout_marginTop="10dp"
         android:id="@+id/registration"
-        android:text="Регистрация"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button"
+        android:text="Регистрация" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:background="@drawable/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:background="@drawable/button"
         android:text="Генератор"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:visibility="gone" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:background="@drawable/button"
-        android:layout_marginTop="10dp"
         android:id="@+id/scanner"
-        android:text="Сканер"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button"
+        android:text="Сканер" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>
